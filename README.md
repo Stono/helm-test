@@ -1,7 +1,7 @@
 # helm-test
 [Mocha](https://mochajs.org/) based testing for [Helm](https://github.com/kubernetes/helm) packages!
 
-![logo](screenshots/logo.png)
+![logo](screenshots/page-logo.png)
 
 ## What does it do?
 [Helm](https://github.com/kubernetes/helm) is a great tool for packaging and templating your kubernetes definitions.  However as your templates grow in complexity, and you start to introduce conditionals and other logic it becomes increasingly easy to unwittingly break them.
