@@ -1,0 +1,46 @@
+{
+  "name": "helm-test",
+  "description": "A CLI to test Helm charts",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Stono/helm-test",
+  "author": {
+    "name": "Karl Stoney",
+    "email": "me@karlstoney.com",
+    "url": "https://karlstoney.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Stono/helm-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Stono/helm-test/issues"
+  },
+  "main": "bin/helm-test",
+  "bin": {
+    "helm-test": "./bin/helm-test"
+  },
+  "engines": {
+    "node": ">= 7.0.0"
+  },
+  "scripts": {
+    "test": "./node_modules/grunt/bin/grunt mochaTest"
+  },
+  "dependencies": {
+    "async": "2.6.0",
+    "command-exists": "1.2.2",
+    "commander": "2.12.2",
+    "istextorbinary": "2.1.0",
+    "mocha": "4.1.0",
+    "should": "13.2.0",
+    "yamljs": "0.3.0"
+  },
+  "devDependencies": {
+    "deride": "1.1.0",
+    "grunt": "1.0.1",
+    "grunt-contrib-jshint": "1.1.0",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-mocha-test": "0.13.2"
+  },
+  "keywords": [],
+  "license": "MIT"
+}

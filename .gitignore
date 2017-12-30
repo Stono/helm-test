@@ -1,0 +1,17 @@
+reports/
+node_modules/
+testresults/
+stats/
+docs/*
+.vagrant/
+coverage/
+
+*.tar.gz
+*.tgz
+*.swp
+*.log
+*.zat
+
+checkstyle-result.xml
+coverage.*
+junit.xml
