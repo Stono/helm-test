@@ -1,5 +1,5 @@
 # helm-test
-A [Mocha](https://mochajs.org/) based testing for [Helm](https://github.com/kubernetes/helm) packages!
+[Mocha](https://mochajs.org/) based testing for [Helm](https://github.com/kubernetes/helm) packages!
 
 ![logo](screenshots/logo.png)
 
