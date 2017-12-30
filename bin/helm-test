@@ -16,6 +16,9 @@ program
 
 app.test({
   watch: program.watch
-}, () => {
-  logger.log('Complete.');
+}, err => {
+  logger.log('Finished.');
+  if(err) {
+    process.exit(1);
+  }
 });
