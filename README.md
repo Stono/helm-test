@@ -45,7 +45,26 @@ After running `helm.go`, the `results` variable will be populated, and it expose
 ### Running your tests
 Is a simple as doing `helm-test`:
 
-![screenshots/helm-test.png](screenshots/helm-test.png)
+```
+$ helm-test
+  helm-test [info] Welcome to helm-test v0.1.1! +0ms
+  helm-test [info] Testing... +0ms
+
+
+  Helm Chart
+    ✓ should have three manifests
+    The Service
+      ✓ should be a LoadBalancer
+      ✓ should be on an internal ip
+    The ConfigMap
+      ✓ should have valid metadata
+      ✓ should have a docker-host key
+
+
+  5 passing (109ms)
+
+  helm-test [info] Complete. +394ms
+```
 
 ### Constantly running tests and watching for changes
 You can have helm-test run every time it detects a change in your chart by simply doing `helm-test --watch`
