@@ -46,24 +46,43 @@ After running `helm.go`, the `results` variable will be populated, and it expose
 Is a simple as doing `helm-test`:
 
 ```
-$ helm-test
-  helm-test [info] Welcome to helm-test v0.1.3! +0ms
+❯ helm-test
+  helm-test [info] Welcome to helm-test v0.1.6! +0ms
   helm-test [info] Testing... +0ms
 
 
   Helm Chart
     ✓ should have three manifests
     The Service
+      ✓ should have standard labels
+      ✓ should have valid metadata.name
       ✓ should be a LoadBalancer
       ✓ should be on an internal ip
+      ✓ should have a single http-web port
+      ✓ should select the right pods
+    The StatefulSet
+      ✓ should have the right name
+      ✓ should have standard labels
+      ✓ should have a serviceName
+      ✓ should have a single replica
+      ✓ should be a RollingUpdate strategy
+      ✓ should have matching matchLabels and template labels
+      Containers
+        ✓ should have two containers
+        Master
+          ✓ should use the right image
+          ✓ should limit 2gig of ram
+          ✓ should limit 1.8 CPU
+          ✓ should have a http-web port
     The ConfigMap
+      ✓ should have standard labels
       ✓ should have valid metadata
       ✓ should have a docker-host key
 
 
-  5 passing (109ms)
+  21 passing (123ms)
 
-  helm-test [info] Complete. +394ms
+  helm-test [info] Complete. +443ms
 ```
 
 ### Constantly running tests and watching for changes
