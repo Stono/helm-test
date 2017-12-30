@@ -6,11 +6,11 @@ A [Mocha](https://mochajs.org/) based testing for [Helm](https://github.com/kube
 ## What does it do?
 [Helm](https://github.com/kubernetes/helm) is a great tool for packaging and templating your kubernetes definitions.  However as your templates grow in complexity, and you start to introduce conditionals and other logic it becomes increasingly easy to unwittingly break them.
 
-I wanted to take some of the tooling that I use when coding, and create a simple cli to test the manifest files that helm generates.
+I wanted to take some of the tooling that I use when coding, and create a simple cli to test the manifest files that helm generates.  `helm-test` will run helm to generate your manifests and then parse the results into JSON for you to perform assertions against.
 
 ## How to use it
 ### Installation
-helm-test is distributed as a command line interface, simply type `npm install -g helm-test`.  Once you've got that installed, you just need to write some tests.
+`helm-test` is distributed as a command line interface, simply type `npm install -g helm-test`.  Once you've got that installed, you just need to write some tests.
 
 ### Writing tests
 Tests should be placed in the root of your helm chart, in a `tests/` folder like so:
@@ -47,7 +47,7 @@ Is a simple as doing `helm-test`:
 
 ```
 $ helm-test
-  helm-test [info] Welcome to helm-test v0.1.1! +0ms
+  helm-test [info] Welcome to helm-test v0.1.3! +0ms
   helm-test [info] Testing... +0ms
 
 
