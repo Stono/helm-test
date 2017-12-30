@@ -34,6 +34,7 @@ There are some global helper variables defined for use in your tests:
 This is the root context and exposes the following functions:
 
   - `withValueFile(path)`: Specify a value file to use when running helm, relative to the root of your chart.  You can call this multiple times
+  - `set(key, value)`: Allows you to override a specific value, for example `set('service.port', '80')` would do `--set service.port=80` when running helm
   - `go(done)`: Run a helm template generation and parse the output
 
 #### results
