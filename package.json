@@ -28,7 +28,7 @@
   "dependencies": {
     "async": "2.6.0",
     "colors": "1.1.2",
-    "command-exists": "1.2.2",
+    "command-exists": "1.2.6",
     "commander": "2.12.2",
     "istextorbinary": "2.1.0",
     "mocha": "4.1.0",
