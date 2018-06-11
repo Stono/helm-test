@@ -42,7 +42,7 @@ This global helper function allows you to parse yaml using `yamljs`.  This is us
 
 eg.
 ```
-const json = YAML.parse(results.ofType('ConfigMap')[0].spec.data);
+const json = yaml.parse(results.ofType('ConfigMap')[0].spec.data);
 json.metadata.name.should.eql('some-manifest');
 ```
 
