@@ -37,6 +37,15 @@ This is the root context and exposes the following functions:
   - `set(key, value)`: Allows you to override a specific value, for example `set('service.port', '80')` would do `--set service.port=80` when running helm
   - `go(done)`: Run a helm template generation and parse the output
 
+#### yaml
+This global helper function allows you to parse yaml using `yamljs`.  This is useful for scenarios like a configmap containing a string block which sub contains yaml, that you wish to assert on.
+
+eg.
+```
+const json = YAML.parse(results.ofType('ConfigMap')[0].spec.data);
+json.metadata.name.should.eql('some-manifest');
+```
+
 #### results
 After running `helm.go`, the `results` variable will be populated, and it exposes the following:
 
