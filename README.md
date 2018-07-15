@@ -33,12 +33,12 @@ There are some global helper variables defined for use in your tests:
 #### helm
 This is the root context and exposes the following functions:
 
-  - `withValueFile([chartName/]path)`: Specify a value file to use when running helm, relative to the root of your chart.  You can call this multiple times
+  - `withValueFile(path, [chartName])`: Specify a value file to use when running helm, relative to the root of your chart.  You can call this multiple times
   - `set(key, value)`: Allows you to override a specific value, for example `set('service.port', '80')` would do `--set service.port=80` when running helm
   - `go(done, [chartName])`: Run a helm template generation and parse the output
   - `lint(done, [chartName])`: Run a helm lint
 
- *`chartName` is an optional parameter but if you want to run helm-test on main folder (against all charts), you need to specify 'chartName'*
+ *`chartName` is an optional parameter but if you want to run helm-test on main folder (against all charts), you need to define 'chartName'*
 
 #### yaml
 This global helper function allows you to parse yaml using `yamljs`.  This is useful for scenarios like a configmap containing a string block which sub contains yaml, that you wish to assert on.

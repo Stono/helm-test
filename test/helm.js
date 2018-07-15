@@ -27,7 +27,7 @@ describe('Helm', () => {
       helm = new Helm(exec);
     });
     it('should accept value files', () => {
-      helm.withValueFile('chart-name/some-file.yaml');
+      helm.withValueFile('some-file.yaml', 'chart-name');
     });
     it('should run a helm template', done => {
       helm.go(done, 'chart-name');
