@@ -12,10 +12,12 @@ const program = require('commander');
 program
   .version(version)
   .option('-w, --watch', 'Watch for file changes and re-run tests')
+  .option('-a, --all', 'Run test against all charts')
   .parse(process.argv);
 
 app.test({
-  watch: program.watch
+  watch: program.watch,
+  all: program.all
 }, err => {
   logger.log('Finished.');
   if(err) {
