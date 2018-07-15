@@ -7,33 +7,12 @@ describe('Helm', () => {
   beforeEach(() => {
     exec = deride.stub(['command']);
     exec.setup.command.toCallbackWith([null, { stdout: '' }]);
+    helm = new Helm(exec);
   });
-  describe('Specific charts', () => {
-    beforeEach(() => {
-      helm = new Helm(exec, '.');
-    });
-    it('should accept value files', () => {
-      helm.withValueFile('some-file.yaml');
-    });
-    it('should run a helm template', done => {
-      helm.go(done);
-    });
-    it('should run a helm lint', done => {
-      helm.lint(done);
-    });
+  it('should accept value files', () => {
+    helm.withValueFile('some-file.yaml');
   });
-  describe('All charts', () => {
-    beforeEach(() => {
-      helm = new Helm(exec);
-    });
-    it('should accept value files', () => {
-      helm.withValueFile('chart-name/some-file.yaml');
-    });
-    it('should run a helm template', done => {
-      helm.go(done, 'chart-name');
-    });
-    it('should run a helm lint', done => {
-      helm.lint(done, 'chart-name');
-    });
+  it('should run a helm template', done => {
+    helm.go(done);
   });
 });
