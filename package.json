@@ -31,9 +31,9 @@
     "command-exists": "1.2.6",
     "commander": "2.15.1",
     "istextorbinary": "2.2.1",
+    "js-yaml": "3.13.1",
     "mocha": "5.2.0",
-    "should": "13.2.1",
-    "yamljs": "0.3.0"
+    "should": "13.2.1"
   },
   "devDependencies": {
     "deride": "1.2.0",
