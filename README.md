@@ -32,7 +32,7 @@ There are some global helper variables defined for use in your tests:
 
 #### helm
 This is the root context and exposes the following functions:
-
+  - `version(helmVersion)`: Specify helm command version to use when specifying test release name (default is 2). If you use helm 3, always add `version("3")` otherwise you will get `unknown flag: --name` when running template generation. 
   - `withValueFile(path)`: Specify a value file to use when running helm, relative to the root of your chart.  You can call this multiple times
   - `set(key, value)`: Allows you to override a specific value, for example `set('service.port', '80')` would do `--set service.port=80` when running helm
   - `go(done)`: Run a helm template generation and parse the output
