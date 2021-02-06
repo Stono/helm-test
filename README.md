@@ -4,7 +4,7 @@
 ![logo](screenshots/page-logo.png)
 
 ## What does it do?
-[Helm](https://github.com/kubernetes/helm) is a great tool for packaging and templating your kubernetes definitions.  However as your templates grow in complexity, and you start to introduce conditionals and other logic it becomes increasingly easy to unwittingly break them.
+[Helm](https://github.com/kubernetes/helm) is a great tool for packaging and templating your kubernetes definitions.  However as your templates grow in complexity, and you start to introduce conditionals and other logic it becomes increasingly easy to unwittingly break them.  Supports both helmv2 and helmv3.
 
 I wanted to take some of the tooling that I use when coding, and create a simple cli to test the manifest files that helm generates.  `helm-test` will run helm to generate your manifests and then parse the results into JSON for you to perform assertions against.
 
@@ -32,7 +32,6 @@ There are some global helper variables defined for use in your tests:
 
 #### helm
 This is the root context and exposes the following functions:
-  - `version(helmVersion)`: Specify helm command version to use when specifying test release name (default is 2). If you use helm 3, always add `version("3")` otherwise you will get `unknown flag: --name` when running template generation.
   - `withValueFile(path)`: Specify a value file to use when running helm, relative to the root of your chart.  You can call this multiple times
   - `set(key, value)`: Allows you to override a specific value, for example `set('service.port', '80')` would do `--set service.port=80` when running helm
   - `go(done)`: Run a helm template generation and parse the output
