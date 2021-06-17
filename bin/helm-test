@@ -11,15 +11,18 @@ logger.log('Welcome to helm-test v' + version + '!');
 const program = require('commander');
 program
   .version(version)
-  .option('-w, --watch', 'Watch for file changes and re-run tests')
+  .option("-w, --watch", "Watch for file changes and re-run tests")
+  .option("-h, --helm-binary <location>", "location of the helm binary")
   .parse(process.argv);
 
-app.test({
-  watch: program.watch
-}, err => {
-  if(err) {
-    logger.log(err);
-    process.exit(1);
-  }
-  logger.log('Finished.');
-});
+
+  app.test(
+    program.opts(),
+    (err) => {
+      if (err) {
+        logger.log(err);
+        process.exit(1);
+      }
+      logger.log("Finished.");
+    }
+  );
