@@ -14,10 +14,8 @@ program
   .option('-w, --watch', 'Watch for file changes and re-run tests')
   .parse(process.argv);
 
-app.test({
-  watch: program.watch
-}, err => {
-  if(err) {
+app.test(program.opts(), (err) => {
+  if (err) {
     logger.log(err);
     process.exit(1);
   }
