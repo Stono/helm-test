@@ -7,7 +7,10 @@ const exec = new require('../lib/exec')();
 const app = new require('../lib/app')(exec);
 
 logger.log('Welcome to helm-test v' + version + '!');
-
+const kubevalEnabled = process.env.HELM_TEST_KUBEVAL_ENABLED === 'true'
+const kubevalVersion = process.env.HELM_TEST_KUBEVAL_KUBERNETES_VERSION
+const kubevalSchemaLocation = process.env.KUBEVAL_SCHEMA_LOCATION
+logger.log(`kubevalEnabled: ${kubevalEnabled}, kubevalVersion: ${kubevalVersion}, kubevalSchemaLocation: ${kubevalSchemaLocation}`)
 const program = require('commander');
 program
   .version(version)
