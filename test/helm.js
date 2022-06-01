@@ -18,7 +18,7 @@ describe('Helm', () => {
     it('should run a helm template', done => {
       helm.go(done);
     });
-  })
+  });
 
   describe('Helm 3', () => {
     let helm, exec;
@@ -34,5 +34,5 @@ describe('Helm', () => {
     it('should run a helm template', done => {
       helm.go(done);
     });
-  })
+  });
 });
