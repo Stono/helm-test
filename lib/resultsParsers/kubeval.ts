@@ -3,14 +3,17 @@ import * as path from 'path';
 import { type IResultsParser } from '.';
 import { Exec } from '../exec';
 import { Logger } from '../logger';
+import { TmpFileWriter } from './tmpFileWriter';
 
 export class KubeValResultsParser implements IResultsParser {
+  public static readonly ENABLED =
+    process.env.HELM_TEST_KUBEVAL_ENABLED === 'true';
   private logger: Logger;
   private readonly kubeVersion: string;
-  private readonly tmpFile: string = '/tmp/helm-test-kubeval';
   private readonly kubevalBinary: string = 'kubeval';
   private readonly exec: Exec;
   private readonly schemaLocation: string | undefined;
+
   constructor() {
     this.logger = new Logger({ namespace: 'kubeval-parser' });
     const schemaLocation = process.env.KUBEVAL_SCHEMA_LOCATION;
@@ -50,10 +53,8 @@ export class KubeValResultsParser implements IResultsParser {
     this.exec = new Exec();
   }
 
-  public async parse(result: { stdout: string }): Promise<void> {
-    fs.writeFileSync(this.tmpFile, result.stdout);
-
-    let command = `${this.kubevalBinary} --ignore-missing-schemas --strict -o json --kubernetes-version=${this.kubeVersion} --quiet ${this.tmpFile}`;
+  public async parse(): Promise<void> {
+    let command = `${this.kubevalBinary} --ignore-missing-schemas --strict -o json --kubernetes-version=${this.kubeVersion} --quiet ${TmpFileWriter.LOCATION}`;
     if (this.schemaLocation) {
       if (!fs.existsSync(this.schemaLocation)) {
         throw new Error(

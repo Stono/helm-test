@@ -1,8 +1,11 @@
 import * as path from 'path';
 import { Exec } from './exec';
+import { Logger } from './logger';
 import { type IResultsParser } from './resultsParsers';
 import { HelmResultParser } from './resultsParsers/helm';
+import { IstioCtlResultsParser } from './resultsParsers/istioctl';
 import { KubeValResultsParser } from './resultsParsers/kubeval';
+import { TmpFileWriter } from './resultsParsers/tmpFileWriter';
 
 export class Helm {
   private readonly helmBinary = process.env.HELM_BINARY
@@ -13,13 +16,24 @@ export class Helm {
   private sets: string[] = [];
   private readonly exec: Exec;
 
+  private readonly logger: Logger;
   private readonly resultsParsers: IResultsParser[] = [];
 
   constructor() {
     this.exec = new Exec();
+    this.logger = new Logger({ namespace: 'helm' });
     this.resultsParsers.push(new HelmResultParser());
-    if (process.env.HELM_TEST_KUBEVAL_ENABLED === 'true') {
+
+    if (KubeValResultsParser.ENABLED || IstioCtlResultsParser.ENABLED) {
+      this.resultsParsers.push(new TmpFileWriter());
+    }
+
+    if (KubeValResultsParser.ENABLED) {
       this.resultsParsers.push(new KubeValResultsParser());
+    }
+
+    if (IstioCtlResultsParser.ENABLED) {
+      this.resultsParsers.push(new IstioCtlResultsParser());
     }
   }
 
@@ -49,6 +63,7 @@ export class Helm {
 
       const result = await this.exec.command(command);
       for (const parser of this.resultsParsers) {
+        this.logger.debug(`running results parser: ${parser.constructor.name}`);
         await parser.parse(result);
       }
       if (done) {

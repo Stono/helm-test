@@ -12,6 +12,8 @@ I wanted to take some of the tooling that I use when coding, and create a simple
 
 As of version `1.0.0`, you can also opt to run your manifests through `kubeval`.
 
+As of version `1.1.0`, you can also opt to run your manifests through `istioctl`.
+
 ## How to use it
 
 ### Installation
@@ -46,6 +48,20 @@ If you plan on running `kubeval` too, make sure you've [downloaded that](https:/
 Whenever you call `helm.go()` in your tests, the templated manifests will also be passed through kubeval:
 
 ![kubeval](screenshots/kubeval.png)
+
+#### IstioCTL
+
+If you are an istio user, you can ask `helm-test` to run your manifests through `istioctl validate` as well.
+
+Make sure you've [downloaded](https://github.com/istio/istio/releases) the `istioctl` binary and it's available on your path.
+
+Then enable the feature in `helm-test`:
+
+```
+export HELM_TEST_ISTIOCTL_ENABLED=true
+```
+
+![istioctl](screenshots/istioctl.png)
 
 ### Writing tests
 

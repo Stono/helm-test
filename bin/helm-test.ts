@@ -5,6 +5,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { App } from '../lib/app';
 import { Logger } from '../lib/logger';
+import { IstioCtlResultsParser } from '../lib/resultsParsers/istioctl';
+import { KubeValResultsParser } from '../lib/resultsParsers/kubeval';
 
 const version = JSON.parse(
   fs.readFileSync(path.join(__dirname, '../package.json')).toString()
@@ -14,12 +16,16 @@ const app = new App();
 const program = new Command();
 
 logger.info(`Welcome to helm-test v${version}!`);
-const kubevalEnabled = process.env.HELM_TEST_KUBEVAL_ENABLED === 'true';
+const kubevalEnabled = KubeValResultsParser.ENABLED;
 const kubevalVersion = process.env.HELM_TEST_KUBEVAL_KUBERNETES_VERSION;
 const kubevalSchemaLocation = process.env.KUBEVAL_SCHEMA_LOCATION;
 logger.info(
-  `kubevalEnabled: ${kubevalEnabled}, kubevalVersion: ${kubevalVersion}, kubevalSchemaLocation: ${kubevalSchemaLocation}`
+  `kubeval enabled: ${kubevalEnabled}, kubevalVersion: ${kubevalVersion}, kubevalSchemaLocation: ${kubevalSchemaLocation}`
 );
+
+const istioctlEnabled = IstioCtlResultsParser.ENABLED;
+logger.info(`istioctl enabled: ${istioctlEnabled}`);
+
 program
   .version(version)
   .option('-w, --watch', 'Watch for file changes and re-run tests')
