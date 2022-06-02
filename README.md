@@ -6,7 +6,7 @@
 
 ## What does it do?
 
-[Helm](https://github.com/kubernetes/helm) is a great tool for packaging and templating your kubernetes definitions. However as your templates grow in complexity, and you start to introduce conditionals and other logic it becomes increasingly easy to unwittingly break them. Supports both helmv2 and helmv3.
+[Helm](https://github.com/kubernetes/helm) is a great tool for packaging and templating your kubernetes definitions. However as your templates grow in complexity, and you start to introduce conditionals and other logic it becomes increasingly easy to unwittingly break them.
 
 I wanted to take some of the tooling that I use when coding, and create a simple cli to test the manifest files that helm generates. `helm-test` will run helm to generate your manifests and then parse the results into JSON for you to perform assertions against.
 
