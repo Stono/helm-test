@@ -24,7 +24,7 @@ export class KubeValResultsParser implements IResultsParser {
     this.kubeVersion = kubeVersion;
 
     if (typeof schemaLocation === 'string') {
-      this.schemaLocation = schemaLocation;
+      this.schemaLocation = schemaLocation.replace('file://', '');
       if (fs.existsSync(this.schemaLocation)) {
         const expectedVersionDir = `v${this.kubeVersion}-standalone-strict`;
         if (
