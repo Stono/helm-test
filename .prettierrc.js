@@ -1,6 +1,6 @@
 module.exports = {
   editorconfig: true,
   trailingComma: 'none',
-  semi: true,
+  semi: false,
   singleQuote: true
-}
+};
