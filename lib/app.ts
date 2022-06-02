@@ -40,7 +40,6 @@ export class App {
 
     const flags = extraFlags.length > 0 ? `${extraFlags.join(' ')} ` : '';
     const command = `${mocha}${watch} -r should -r ${globals} ${flags}--recursive tests`;
-    console.log(command);
     await this.exec.command(command, execOptions);
   }
 }

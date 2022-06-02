@@ -1,7 +1,7 @@
 {
   "name": "helm-test",
   "description": "A CLI to test Helm charts",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "homepage": "https://github.com/Stono/helm-test",
   "author": {
     "name": "Karl Stoney",
