@@ -54,7 +54,7 @@ const copyConfig = {
   config: {
     expand: true,
     cwd: '.',
-    src: ['package.json'],
+    src: ['package.json', 'README.md'],
     dest: 'built/'
   }
 };

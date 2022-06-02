@@ -10,7 +10,7 @@
 
 I wanted to take some of the tooling that I use when coding, and create a simple cli to test the manifest files that helm generates. `helm-test` will run helm to generate your manifests and then parse the results into JSON for you to perform assertions against.
 
-As of version 1.0.0, you can also opt to run your manifests through `kubeval`.
+As of version `1.0.0`, you can also opt to run your manifests through `kubeval`.
 
 ## How to use it
 
@@ -18,13 +18,13 @@ As of version 1.0.0, you can also opt to run your manifests through `kubeval`.
 
 `helm-test` is distributed as a command line interface, simply type `npm install -g helm-test`.
 
-I assume you've got helm downloaded as you're wanting to write tests on helm charts, but if you don't, then - [download helm](https://github.com/helm/helm/releases), and ensure it's available on your path.
+I assume you've got `helm` downloaded as you're wanting to write tests on helm charts, but if you don't, then - [download helm](https://github.com/helm/helm/releases), and ensure it's available on your path.
 
 As of version `1.0.0`, only `helm3` is supported.
 
 #### Kubeval
 
-You can have helm-test run your manifests through `kubeval` for some additional checking. Kubeval will attempt to download the schemas, but if you have lots of tests then I **strongly** suggest downloading a copy of the schemas you are interested in:
+You can have `helm-test` run your manifests through `kubeval` for some additional checking. By default `kubeval` will attempt to download the schemas, but if you have lots of tests then I **strongly** suggest downloading a copy of the schemas you are interested in:
 
 ```
 mkdir -p /tmp/kubeval-schemas
