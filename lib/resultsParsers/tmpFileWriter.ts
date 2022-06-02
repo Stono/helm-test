@@ -1,9 +1,14 @@
 import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 import { type IResultsParser } from '.';
 import { Logger } from '../logger';
 
 export class TmpFileWriter implements IResultsParser {
-  public static readonly LOCATION: string = '/tmp/helm-test-manifests';
+  public static readonly LOCATION: string = path.join(
+    os.tmpdir(),
+    'helm-test-manifests'
+  );
   private logger: Logger;
   constructor() {
     this.logger = new Logger({ namespace: 'tmp-file' });
