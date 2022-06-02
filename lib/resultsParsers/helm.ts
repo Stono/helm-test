@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as async from 'async';
 import * as YAML from 'js-yaml';
-import { type IResultsParser } from '.';
+import type { IPhaseOneParser, PhaseOneOptions } from '.';
 import { Logger } from '../logger';
 
 declare var global: {
   results: { length: number; byType: any; ofType: (type: string) => any[] };
 };
 
-export class HelmResultParser implements IResultsParser {
+export class HelmResultParser implements IPhaseOneParser {
   private logger: Logger;
   constructor() {
     this.logger = new Logger({ namespace: 'helm-parser' });
@@ -24,7 +24,7 @@ export class HelmResultParser implements IResultsParser {
     };
   }
 
-  public async parse(result: { stdout: string }): Promise<void> {
+  public async parse({ result }: PhaseOneOptions): Promise<void> {
     global.results.byType = [];
     global.results.length = 0;
     const removeNonManifests = (manifest: string): boolean => {

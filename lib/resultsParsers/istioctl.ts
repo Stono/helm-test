@@ -1,9 +1,8 @@
-import { type IResultsParser } from '.';
+import type { IPhaseOneParser, PhaseTwoOptions } from '.';
 import { Exec } from '../exec';
 import { Logger } from '../logger';
-import { TmpFileWriter } from './tmpFileWriter';
 
-export class IstioCtlResultsParser implements IResultsParser {
+export class IstioCtlResultsParser implements IPhaseOneParser {
   public static readonly ENABLED =
     process.env.HELM_TEST_ISTIOCTL_ENABLED === 'true';
   private logger: Logger;
@@ -20,9 +19,9 @@ export class IstioCtlResultsParser implements IResultsParser {
     this.exec = new Exec();
   }
 
-  public async parse(): Promise<void> {
+  public async parse({ onDisk }: PhaseTwoOptions): Promise<void> {
     this.logger.debug('running istioctl validate');
-    const command = `${this.istioctlBinary} validate -f ${TmpFileWriter.LOCATION}`;
+    const command = `${this.istioctlBinary} validate -f ${onDisk}`;
     await this.exec.command(command, { throw: true });
   }
 }

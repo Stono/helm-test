@@ -1,11 +1,13 @@
+import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
+import * as randomstring from 'randomstring';
 import { Exec } from './exec';
 import { Logger } from './logger';
-import { type IResultsParser } from './resultsParsers';
+import type { IPhaseOneParser, IPhaseTwoParser } from './resultsParsers';
 import { HelmResultParser } from './resultsParsers/helm';
 import { IstioCtlResultsParser } from './resultsParsers/istioctl';
 import { KubeValResultsParser } from './resultsParsers/kubeval';
-import { TmpFileWriter } from './resultsParsers/tmpFileWriter';
 
 export class Helm {
   private readonly helmBinary = process.env.HELM_BINARY
@@ -17,17 +19,13 @@ export class Helm {
   private readonly exec: Exec;
 
   private readonly logger: Logger;
-  private readonly phase1: IResultsParser[] = [];
-  private readonly phase2: IResultsParser[] = [];
+  private readonly phase1: IPhaseOneParser[] = [];
+  private readonly phase2: IPhaseTwoParser[] = [];
 
   constructor() {
     this.exec = new Exec();
     this.logger = new Logger({ namespace: 'helm' });
     this.phase1.push(new HelmResultParser());
-
-    if (KubeValResultsParser.ENABLED || IstioCtlResultsParser.ENABLED) {
-      this.phase1.push(new TmpFileWriter());
-    }
 
     if (KubeValResultsParser.ENABLED) {
       this.phase2.push(new KubeValResultsParser());
@@ -50,6 +48,8 @@ export class Helm {
   }
 
   public async go(done?: (err?: Error) => void): Promise<void> {
+    let filename: string | null = null;
+
     try {
       let command = this.command;
       if (this.files.length > 0) {
@@ -64,12 +64,23 @@ export class Helm {
 
       const result = await this.exec.command(command, { throw: true });
 
+      if (IstioCtlResultsParser.ENABLED || KubeValResultsParser.ENABLED) {
+        filename = path.join(
+          os.tmpdir(),
+          randomstring.generate({
+            length: 20,
+            charset: 'alphabetic'
+          })
+        );
+        fs.writeFileSync(filename, result.stdout);
+      }
+
       await Promise.all(
         this.phase1.map(async (parser) => {
           this.logger.debug(
             `running results parser: ${parser.constructor.name}`
           );
-          await parser.parse(result);
+          await parser.parse({ result });
         })
       );
 
@@ -78,9 +89,10 @@ export class Helm {
           this.logger.debug(
             `running results parser: ${parser.constructor.name}`
           );
-          await parser.parse(result);
+          await parser.parse({ result, onDisk: filename as string });
         })
       );
+
       if (done) {
         done();
       }
@@ -88,6 +100,10 @@ export class Helm {
       this.logger.error(ex.message);
       if (done) {
         done(ex);
+      }
+    } finally {
+      if (filename) {
+        fs.unlinkSync(filename);
       }
     }
   }

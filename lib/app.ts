@@ -15,6 +15,8 @@ export class App {
   public async test(options: {
     helmBinary: string;
     watch: boolean;
+    bail: boolean;
+    parallel: boolean;
   }): Promise<void> {
     const execOptions = { output: true, cwd: process.cwd() };
     const mocha = path.join(__dirname, '../node_modules/.bin/mocha');
@@ -28,8 +30,17 @@ export class App {
       this.logger.info('Watching for file changes enabled.');
       watch = ' --watch --watch-extensions yaml,tpl';
     }
-    const command = `${mocha}${watch} -r should -r ${globals} --recursive tests`;
+    const extraFlags: string[] = [];
+    if (options.bail) {
+      extraFlags.push('--bail');
+    }
+    if (options.parallel) {
+      extraFlags.push('--parallel');
+    }
 
+    const flags = extraFlags.length > 0 ? `${extraFlags.join(' ')} ` : '';
+    const command = `${mocha}${watch} -r should -r ${globals} ${flags}--recursive tests`;
+    console.log(command);
     await this.exec.command(command, execOptions);
   }
 }

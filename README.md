@@ -156,6 +156,20 @@ Is a simple as doing `helm-test`:
 
 You can have helm-test run every time it detects a change in your chart by simply doing `helm-test --watch`
 
+### Running in parallel
+
+You can get significant improvements in performance by using mochas `--parallel` by doing `helm-test --parallel`. Please note that `.only` will not work.
+
+Please also note that this will use `NCPU-1` for threads, if you're also using `istioctl` and `kubeval`, that can spawn a lot of sub processes!
+
+### Failing fast
+
+By default, all tests will run and then report back. You can fail on the first test failure by doing `helm-test --bail`.
+
+### Debugging
+
+Set `export LOG_LEVEL=debug` to see more info about what `helm-test` is doing.
+
 ## License
 
 Copyright (c) 2022 Karl Stoney

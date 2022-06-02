@@ -7,7 +7,6 @@ import { App } from '../lib/app';
 import { Logger } from '../lib/logger';
 import { IstioCtlResultsParser } from '../lib/resultsParsers/istioctl';
 import { KubeValResultsParser } from '../lib/resultsParsers/kubeval';
-import { TmpFileWriter } from '../lib/resultsParsers/tmpFileWriter';
 
 const version = JSON.parse(
   fs.readFileSync(path.join(__dirname, '../package.json')).toString()
@@ -23,7 +22,6 @@ const kubevalSchemaLocation = process.env.KUBEVAL_SCHEMA_LOCATION;
 logger.info(
   `kubeval enabled: ${kubevalEnabled}, kubevalVersion: ${kubevalVersion}, kubevalSchemaLocation: ${kubevalSchemaLocation}`
 );
-logger.info(`tmp file location: ${TmpFileWriter.LOCATION}`);
 
 const istioctlEnabled = IstioCtlResultsParser.ENABLED;
 logger.info(`istioctl enabled: ${istioctlEnabled}`);
@@ -31,6 +29,11 @@ logger.info(`istioctl enabled: ${istioctlEnabled}`);
 program
   .version(version)
   .option('-w, --watch', 'Watch for file changes and re-run tests')
+  .option('-b, --bail', 'Bail out on the first failure')
+  .option(
+    '-p, --parallel',
+    'Run tests in parallel, be aware that .only is not supported'
+  )
   .option('-h, --helm-binary <location>', 'location of the helm binary')
   .parse(process.argv);
 

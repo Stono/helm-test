@@ -1,11 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { type IResultsParser } from '.';
+import type { IPhaseOneParser, PhaseTwoOptions } from '.';
 import { Exec } from '../exec';
 import { Logger } from '../logger';
-import { TmpFileWriter } from './tmpFileWriter';
 
-export class KubeValResultsParser implements IResultsParser {
+export class KubeValResultsParser implements IPhaseOneParser {
   public static readonly ENABLED =
     process.env.HELM_TEST_KUBEVAL_ENABLED === 'true';
   private logger: Logger;
@@ -53,8 +52,8 @@ export class KubeValResultsParser implements IResultsParser {
     this.exec = new Exec();
   }
 
-  public async parse(): Promise<void> {
-    let command = `${this.kubevalBinary} --ignore-missing-schemas --strict -o json --kubernetes-version=${this.kubeVersion} --quiet ${TmpFileWriter.LOCATION}`;
+  public async parse({ onDisk }: PhaseTwoOptions): Promise<void> {
+    let command = `${this.kubevalBinary} --ignore-missing-schemas --strict -o json --kubernetes-version=${this.kubeVersion} --quiet ${onDisk}`;
     if (this.schemaLocation) {
       if (!fs.existsSync(this.schemaLocation)) {
         throw new Error(
