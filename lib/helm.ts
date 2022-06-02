@@ -17,24 +17,24 @@ export class Helm {
   private readonly exec: Exec;
 
   private readonly logger: Logger;
-  private readonly sequentialResultsParsers: IResultsParser[] = [];
-  private readonly parallelResultsParsers: IResultsParser[] = [];
+  private readonly phase1: IResultsParser[] = [];
+  private readonly phase2: IResultsParser[] = [];
 
   constructor() {
     this.exec = new Exec();
     this.logger = new Logger({ namespace: 'helm' });
-    this.sequentialResultsParsers.push(new HelmResultParser());
+    this.phase1.push(new HelmResultParser());
 
     if (KubeValResultsParser.ENABLED || IstioCtlResultsParser.ENABLED) {
-      this.sequentialResultsParsers.push(new TmpFileWriter());
+      this.phase1.push(new TmpFileWriter());
     }
 
     if (KubeValResultsParser.ENABLED) {
-      this.parallelResultsParsers.push(new KubeValResultsParser());
+      this.phase2.push(new KubeValResultsParser());
     }
 
     if (IstioCtlResultsParser.ENABLED) {
-      this.parallelResultsParsers.push(new IstioCtlResultsParser());
+      this.phase2.push(new IstioCtlResultsParser());
     }
   }
 
@@ -63,12 +63,18 @@ export class Helm {
       this.sets = [];
 
       const result = await this.exec.command(command, { throw: true });
-      for (const parser of this.sequentialResultsParsers) {
-        this.logger.debug(`running results parser: ${parser.constructor.name}`);
-        await parser.parse(result);
-      }
+
       await Promise.all(
-        this.parallelResultsParsers.map(async (parser) => {
+        this.phase1.map(async (parser) => {
+          this.logger.debug(
+            `running results parser: ${parser.constructor.name}`
+          );
+          await parser.parse(result);
+        })
+      );
+
+      await Promise.all(
+        this.phase2.map(async (parser) => {
           this.logger.debug(
             `running results parser: ${parser.constructor.name}`
           );
