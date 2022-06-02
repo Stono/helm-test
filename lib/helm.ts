@@ -62,7 +62,7 @@ export class Helm {
       this.files = [];
       this.sets = [];
 
-      const result = await this.exec.command(command);
+      const result = await this.exec.command(command, { throw: true });
       for (const parser of this.sequentialResultsParsers) {
         this.logger.debug(`running results parser: ${parser.constructor.name}`);
         await parser.parse(result);
@@ -79,6 +79,7 @@ export class Helm {
         done();
       }
     } catch (ex) {
+      this.logger.error(ex.message);
       if (done) {
         done(ex);
       }
