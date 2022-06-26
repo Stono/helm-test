@@ -98,9 +98,10 @@ export class Helm {
       }
     } catch (ex) {
       this.logger.error(ex.message)
-      if (done) {
-        done(ex)
+      if (filename) {
+        fs.unlinkSync(filename)
       }
+      process.exit(1)
     } finally {
       if (filename) {
         fs.unlinkSync(filename)
