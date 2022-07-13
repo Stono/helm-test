@@ -42,8 +42,12 @@ export class Helm {
     return this
   }
 
-  public set(key: string, value: string): Helm {
-    this.sets.push(`${key}=${value}`)
+  public set(key: string, value: unknown): Helm {
+    if (Array.isArray(value)) {
+      this.sets.push(`${key}={${value.join(',')}}`)
+    } else {
+      this.sets.push(`${key}=${value}`)
+    }
     return this
   }
 
