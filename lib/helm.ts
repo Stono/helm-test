@@ -105,7 +105,9 @@ export class Helm {
       if (filename) {
         fs.unlinkSync(filename)
       }
-      process.exit(1)
+      if (done) {
+        done(ex)
+      }
     } finally {
       if (filename) {
         fs.unlinkSync(filename)
