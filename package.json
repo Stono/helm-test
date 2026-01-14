@@ -34,7 +34,7 @@
     "colors": "1.4.0",
     "commander": "9.3.0",
     "debug": "4.3.4",
-    "js-yaml": "4.1.0",
+    "js-yaml": "4.1.1",
     "mocha": "10.0.0",
     "randomstring": "1.2.2",
     "should": "13.2.3"
