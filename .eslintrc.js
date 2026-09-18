@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   root: true,
@@ -96,7 +96,6 @@ module.exports = {
     'import/no-default-export': 'error',
     'promise/no-callback-in-promise': 'off',
     'no-useless-catch': 'error',
-    '@typescript-eslint/no-duplicate-imports': 'error',
     '@typescript-eslint/consistent-type-imports': [
       'error',
       {
@@ -215,7 +214,7 @@ module.exports = {
     'no-confusing-arrow': 'warn',
     'no-continue': 'error',
     'no-div-regex': 'error',
-    'no-duplicate-imports': 'off',
+    'no-duplicate-imports': 'error',
     'no-else-return': 'error',
     'no-empty-function': 'off',
     'no-eq-null': 'error',
@@ -389,4 +388,4 @@ module.exports = {
     'mocha/valid-suite-description': 'off',
     'mocha/valid-test-description': 'off'
   }
-};
+}

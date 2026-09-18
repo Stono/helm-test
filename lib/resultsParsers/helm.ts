@@ -52,9 +52,10 @@ export class HelmResultParser implements IPhaseOneParser {
         }
         json = YAML.load(manifest)
       } catch (ex) {
+        const error = ex instanceof Error ? ex : new Error(String(ex))
         this.logger.error(`Failed to parse manifest: ${source}`)
-        this.logger.error(ex.message)
-        nextManifest(new Error('Unable to parse manifest'))
+        this.logger.error(error.message)
+        nextManifest(error)
         return
       }
       if (!json || !json.kind) {

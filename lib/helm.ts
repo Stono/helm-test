@@ -101,12 +101,13 @@ export class Helm {
         done()
       }
     } catch (ex) {
-      this.logger.error(ex.message)
+      const error = ex instanceof Error ? ex : new Error(String(ex))
+      this.logger.error(error.message)
       if (filename) {
         fs.unlinkSync(filename)
       }
       if (done) {
-        done(ex)
+        done(error)
       }
     } finally {
       if (filename) {
